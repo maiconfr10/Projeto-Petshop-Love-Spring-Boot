@@ -12,7 +12,6 @@
 8. Como funciona a Autenticação JWT (fluxo detalhado)
 9. Exemplos de JSON para testes
 10.JSONs de Teste Finais (Resumo)
-
 11.Checklist Rápido para Recriar o Banco e Testar o Sistema
 
 12.Passo a Passo para Apagar e Recriar o Banco (MySQL)
