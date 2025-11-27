@@ -240,5 +240,231 @@ Configurações definidas no `SecurityConfigurations`.
 (Os mesmos já listados acima para facilitar o uso no Postman.)
 
 ---
+🗂️ 10. Recriação Completa do Banco de Dados (MySQL)
+🔥 1) Apagar o banco antigo e recriar do zero
+
+Abra o terminal MySQL e execute:
+
+-- 1. conectar
+mysql -u root -p
+
+-- 2. apagar o banco antigo
+DROP DATABASE IF EXISTS petshoplove;
+
+-- 3. criar novamente
+CREATE DATABASE petshoplove CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- 4. selecionar banco
+USE petshoplove;
+
+
+Se estiver usando outro usuário/schema, ajuste conforme necessário.
+
+🚀 11. Subir a Aplicação (gerar tabelas via Hibernate)
+
+Após recriar o banco, inicie a aplicação:
+
+Pelo IDE (Spring Boot Run)
+
+Ou terminal:
+
+mvn spring-boot:run
+
+
+O Hibernate criará automaticamente as tabelas conforme o valor de:
+
+spring.jpa.hibernate.ddl-auto=update
+
+
+Espere aparecer:
+
+Started ProjetoPetshopLoveApplication
+
+👤 12. Inserir Perfis (ADMIN, COMUM)
+
+Após as tabelas serem criadas, execute:
+
+USE petshoplove;
+
+INSERT INTO perfil (nome) VALUES ('ADMIN'), ('COMUM');
+
+SELECT id, nome FROM perfil;
+
+
+Anote os IDs retornados — normalmente:
+
+1 → ADMIN  
+2 → COMUM
+
+🔐 13. Gerar Senha Criptografada (BCrypt)
+
+Você tem duas opções:
+
+✔ Opção A — Gerar via Java (recomendado)
+
+Crie uma classe utilitária:
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+public class GerarSenha {
+    public static void main(String[] args) {
+        System.out.println(new BCryptPasswordEncoder().encode("123456"));
+    }
+}
+
+
+Execute a classe e copie o hash gerado.
+
+✔ Opção B — Gerador online
+
+Pode usar:
+
+https://bcrypt-generator.com/
+
+(Não recomendado para produção)
+
+🔑 Exemplo de hash válido (apenas exemplo):
+$2a$12$taetSBrCiXxixuqcDzzMXOl0YKvbqinHqckWQkFft.SoBToiscyBW
+
+👨‍💼 14. Criar Usuário Admin Manualmente (via SQL)
+
+Use o ID do perfil ADMIN (geralmente 1):
+
+INSERT INTO usuario (nome, email, senha) 
+VALUES ('Administrador', 'admin@petshop.com', '$2a$12$taetSBrCiXxixuqcDzzMXOl0YKvbqinHqckWQkFft.SoBToiscyBW');
+
+
+Ver o ID gerado:
+
+SELECT id_usuario FROM usuario WHERE email = 'admin@petshop.com';
+
+
+Supondo que seja 1, associe ao perfil:
+
+INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (1, 1);
+
+🌐 15. Criar Usuário via API (opcional)
+
+Se você implementou o controller:
+
+POST /usuario
+
+
+Body:
+
+{
+  "nome": "Administrador",
+  "email": "admin@petshop.com",
+  "senha": "123456"
+}
+
+
+O service irá criptografar automaticamente.
+
+🔎 16. Testar Autenticação JWT
+Login:
+POST http://localhost:8080/auth/login
+
+
+Body:
+
+{
+  "email": "admin@petshop.com",
+  "senha": "123456"
+}
+
+
+Resposta:
+
+{ "token": "eyJ..." }
+
+
+Use no Postman:
+
+Authorization → Bearer TOKEN_AQUI
+
+❗ 17. Erros Comuns
+❌ 401 Unauthorized
+
+→ Email ou senha inválidos
+→ Hash incompatível
+→ Usuário não criado
+
+❌ 403 Forbidden
+
+→ O token é válido, mas o perfil não tem permissão
+→ Verifique tabela usuario_perfil
+
+❌ Erro de FK ao subir a aplicação
+
+→ Banco recriado parcialmente
+→ Execute novamente:
+
+DROP DATABASE; CREATE DATABASE;
+
+📜 18. Scripts SQL Completos (prontos para uso)
+USE petshoplove;
+
+INSERT INTO perfil (nome) VALUES ('ADMIN'), ('COMUM');
+
+INSERT INTO usuario (nome, email, senha) VALUES 
+('Administrador', 'admin@petshop.com', '$2a$12$taetSBrCiXxixuqcDzzMXOl0YKvbqinHqckWQkFft.SoBToiscyBW');
+
+INSERT INTO usuario_perfil (usuario_id, perfil_id) VALUES (1, 1);
+
+📦 19. JSONs de Teste (Resumo Final)
+Cliente
+{
+  "nomeCliente": "Carlos Silva",
+  "teleCliente": "21988887777",
+  "emailCliente": "carlos.silva@gmail.com"
+}
+
+Animal
+{
+  "nomeAnimal": "Rex",
+  "especie": "Cachorro",
+  "raca": "Labrador",
+  "idade": "3 anos",
+  "idCliente": 1
+}
+
+Serviço
+{
+  "descricao": "Banho e Tosa",
+  "preco": 80.0
+}
+
+Atendimento
+{
+  "data": "2025-11-10",
+  "animal": { "idAnimal": 1 },
+  "observacoes": "Animal tranquilo"
+}
+
+Associação
+POST /atendimento-servico/1/1
+
+🧭 20. Checklist Final para Executar Agora
+
+⛔ Parar aplicação
+
+🔥 DROP DATABASE IF EXISTS petshoplove;
+
+🆕 Criar banco
+
+▶️ Subir app (Hibernate cria as tabelas)
+
+🧩 Inserir perfis
+
+🔐 Gerar hash BCrypt
+
+👨‍💼 Inserir usuário admin
+
+🔗 Associar perfil ADMIN
+
+🔑 Testar login
+
+✔ Testar rotas com token
 
 
