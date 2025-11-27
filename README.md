@@ -1,36 +1,31 @@
 # PetshopLove – Documentação Completa
 
-## 📌 Sumário
+📌 Sumário
+1.	Visão Geral do Projeto
+2.	Modelo Conceitual (DER)
+3.	Modelo Lógico
+4.	Diagrama de Classes
+5.	Estrutura da API
+6.	Cadastro e Autenticação de Usuários (BCrypt + JWT)
+7.	Explicação Completa das Rotas da API
+8.	Como funciona a Autenticação JWT (fluxo detalhado)
+9.	Exemplos de JSON para testes
+10.	JSONs de Teste Finais (Resumo)
+11.	Checklist Rápido para Recriar o Banco e Testar o Sistema
+12.	Passo a Passo para Apagar e Recriar o Banco (MySQL)
+13.	Subir a Aplicação e Gerar Tabelas com Hibernate
+14.	Inserir Perfis (ADMIN, COMUM)
+15.	Gerar Senha BCrypt (2 Métodos)
+16.	Inserir Usuário Admin Manualmente (SQL)
+17.	Criar Usuário via API (Alternativa Recomendada)
+18.	Testar Autenticação JWT (Postman)
+19.	Erros Comuns e Como Resolver
+20.	Scripts SQL Completos para Inicialização
 
-1. Visão Geral do Projeto
-2. Modelo Conceitual (DER)
-3. Modelo Lógico
-4. Diagrama de Classes
-5. Estrutura da API
-6. Cadastro e Autenticação de Usuários (BCrypt + JWT)
-7. Explicação Completa das Rotas da API
-8. Como funciona a Autenticação JWT (fluxo detalhado)
-9. Exemplos de JSON para testes
-10.JSONs de Teste Finais (Resumo)
-11.Checklist Rápido para Recriar o Banco e Testar o Sistema
 
-12.Passo a Passo para Apagar e Recriar o Banco (MySQL)
 
-13.Subir a Aplicação e Gerar Tabelas com Hibernate
 
-14.Inserir Perfis (ADMIN, COMUM)
 
-15.Gerar Senha BCrypt (2 Métodos)
-
-16.Inserir Usuário Admin Manualmente (SQL)
-
-17.Criar Usuário via API (Alternativa Recomendada)
-
-18.Testar Autenticação JWT (Postman)
-
-19.Erros Comuns e Como Resolver
-
-20.Scripts SQL Completos para Inicialização
 
 ---
 
