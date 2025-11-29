@@ -1,5 +1,7 @@
 package backend.Projeto.Petshop.Love.atendimentoServico;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,11 @@ public class AtendimentoServicoService {
 
 		// 🔹 Salva e retorna
 		return atendimentoServicoRepository.save(atendimentoServico);
+	
+	}public List<AtendimentoServico> listarTodosVinculos() {
+	    return atendimentoServicoRepository.findAll();
 	}
+	
+	
 
 }

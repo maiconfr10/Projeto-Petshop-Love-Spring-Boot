@@ -60,7 +60,7 @@ public class Atendimento {
 		this.data = data;
 	}
 
-	public String getObsercoes() {
+	public String getObservacoes() {
 		return observacoes;
 	}
 

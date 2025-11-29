@@ -31,7 +31,7 @@ public class ClienteService {
 		clienteExistente.setNomeCliente(novoCliente.getNomeCliente());
 		clienteExistente.setTeleCliente(novoCliente.getTeleCliente());
 		clienteExistente.setEmailCliente(novoCliente.getEmailCliente());
-		return clienteExistente;
+		return repository.save(clienteExistente);
 
 	}public ClienteEntitie cadastrarCliente(ClienteEntitie cliente) {
 	    return repository.save(cliente);
